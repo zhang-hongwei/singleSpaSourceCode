@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+
+
+    <script src="/lib/umd/single-spa.js">
+
+    </script>
+
+
+    <script>
+        // 1.  参数 注册应用的名字， 2， 加载app的方法必须是返回一个promise方法
+        singleSpa.registerApplication('app1', async () => {
+            console.log("===>加载时执行1",)
+            return {
+                bootstrap: async () => {
+                    console.log('===>bootstrap1')
+                },
+                mount: async () => { console.log('===>mount1') },
+                unmount: async () => { console.log('===>unmount1') }
+            }
+
+        }, location => {
+            return location.hash.startsWith('#/app1')
+        }, {
+            store: {
+                name: 'test',
+                data: '1'
+            }
+        });
+
+
+
+        singleSpa.registerApplication('app2', async () => {
+            console.log("===>加载时执行2",)
+            return {
+                bootstrap: async () => {
+                    console.log('===>bootstrap2')
+                },
+                mount: async () => { console.log('===>mount2') },
+                unmount: async () => { console.log('===>unmount2') }
+            }
+
+        }, location => {
+            return location.hash.startsWith('#/app2')
+        }, {
+            store: {
+                name: 'test',
+                data: '12'
+            }
+        });
+
+
+
+
+
+
+        singleSpa.start();
+
+        // registerApplication 默认回加载应用
+        // start 会挂载应用 
+    </script>
+</body>
+
+</html>
